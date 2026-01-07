@@ -1,0 +1,97 @@
+{
+  "Status": {
+    "id": "FIELD_ID_STATUS",
+    "options": {
+      "Backlog": "OPTION_ID",
+      "Ready": "OPTION_ID",
+      "In Progress": "OPTION_ID",
+      "Review / Verify": "OPTION_ID",
+      "Done": "OPTION_ID"
+    }
+  },
+  "Release": {
+    "id": "FIELD_ID_RELEASE",
+    "options": {
+      "MVP": "OPTION_ID",
+      "V1": "OPTION_ID",
+      "V1.5": "OPTION_ID",
+      "V2": "OPTION_ID",
+      "Future": "OPTION_ID",
+      "Tech Debt": "OPTION_ID",
+      "Research / Spike": "OPTION_ID"
+    }
+  },
+  "Phase": {
+    "id": "FIELD_ID_PHASE",
+    "options": {
+      "P0 — Planning & Specs": "OPTION_ID",
+      "P1 — Scaffolding & DX": "OPTION_ID",
+      "P2 — Data Model & API": "OPTION_ID",
+      "P3 — Mobile Foundation & UI System": "OPTION_ID",
+      "P4 — Calibration & Geometry": "OPTION_ID",
+      "P5 — Upload & Processing UX": "OPTION_ID",
+      "P6 — CV Shot Segmentation": "OPTION_ID",
+      "P7 — CV Cue Ball Tracking": "OPTION_ID",
+      "P8 — CV Pocket Events & Outcome": "OPTION_ID",
+      "P9 — Review UX & Analytics": "OPTION_ID",
+      "P10 — Dataset Flywheel": "OPTION_ID",
+      "P11 — Hardening & Release": "OPTION_ID",
+      "P12 — V1+ Expansion": "OPTION_ID"
+    }
+  },
+  "Area": {
+    "id": "FIELD_ID_AREA",
+    "options": {
+      "Mobile (Flutter)": "OPTION_ID",
+      "API (FastAPI)": "OPTION_ID",
+      "Worker (CV Pipeline)": "OPTION_ID",
+      "CV / ML": "OPTION_ID",
+      "Infra / DevOps": "OPTION_ID",
+      "Storage (R2 / S3)": "OPTION_ID",
+      "Data / Dataset": "OPTION_ID",
+      "UX / Design": "OPTION_ID",
+      "QA / Testing": "OPTION_ID",
+      "Docs": "OPTION_ID",
+      "Security / Privacy": "OPTION_ID"
+    }
+  },
+  "Priority": {
+    "id": "FIELD_ID_PRIORITY",
+    "options": {
+      "P0 — Must Ship": "OPTION_ID",
+      "P1 — High": "OPTION_ID",
+      "P2 — Medium": "OPTION_ID",
+      "P3 — Low": "OPTION_ID"
+    }
+  },
+  "Risk": {
+    "id": "FIELD_ID_RISK",
+    "options": {
+      "High": "OPTION_ID",
+      "Medium": "OPTION_ID",
+      "Low": "OPTION_ID"
+    }
+  },
+  "Type": {
+    "id": "FIELD_ID_TYPE",
+    "options": {
+      "Feature": "OPTION_ID",
+      "Bug": "OPTION_ID",
+      "Refactor": "OPTION_ID",
+      "Chore": "OPTION_ID",
+      "Spike": "OPTION_ID",
+      "Experiment": "OPTION_ID",
+      "Design": "OPTION_ID"
+    }
+  },
+  "Effort": {
+    "id": "FIELD_ID_EFFORT",
+    "options": {
+      "XS — ≤ 2 hours": "OPTION_ID",
+      "S — ≤ 1 day": "OPTION_ID",
+      "M — 2–3 days": "OPTION_ID",
+      "L — ~1 week": "OPTION_ID",
+      "XL — Multi-week / unclear": "OPTION_ID"
+    }
+  }
+}

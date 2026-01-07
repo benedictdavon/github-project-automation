@@ -1,0 +1,50 @@
+{
+  "Release": {
+    "id": "FIELD_ID",
+    "options": {
+      "MVP": "OPTION_ID"
+    }
+  },
+  "Phase": {
+    "id": "FIELD_ID",
+    "options": {
+      "P1 — Scaffolding & DX": "OPTION_ID"
+    }
+  },
+  "Area": {
+    "id": "FIELD_ID",
+    "options": {
+      "API (FastAPI)": "OPTION_ID"
+    }
+  },
+  "Priority": {
+    "id": "FIELD_ID",
+    "options": {
+      "P0 — Must Ship": "OPTION_ID"
+    }
+  },
+  "Risk": {
+    "id": "FIELD_ID",
+    "options": {
+      "Low": "OPTION_ID"
+    }
+  },
+  "Type": {
+    "id": "FIELD_ID",
+    "options": {
+      "Feature": "OPTION_ID"
+    }
+  },
+  "Effort": {
+    "id": "FIELD_ID",
+    "options": {
+      "M — 2–3 days": "OPTION_ID"
+    }
+  },
+  "Status": {
+    "id": "FIELD_ID",
+    "options": {
+      "Backlog": "OPTION_ID"
+    }
+  }
+}
