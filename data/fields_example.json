@@ -1,50 +1,58 @@
 {
   "Release": {
-    "id": "FIELD_ID",
+    "id": "FIELD_RELEASE",
     "options": {
-      "MVP": "OPTION_ID"
+      "MVP": "OPTION_RELEASE_MVP"
     }
   },
   "Phase": {
-    "id": "FIELD_ID",
+    "id": "FIELD_PHASE",
     "options": {
-      "P1 — Scaffolding & DX": "OPTION_ID"
+      "P1 - Scaffolding & DX": "OPTION_PHASE_P1"
     }
   },
   "Area": {
-    "id": "FIELD_ID",
+    "id": "FIELD_AREA",
     "options": {
-      "API (FastAPI)": "OPTION_ID"
+      "API (FastAPI)": "OPTION_AREA_API",
+      "Docs": "OPTION_AREA_DOCS",
+      "Infra / DevOps": "OPTION_AREA_INFRA"
     }
   },
   "Priority": {
-    "id": "FIELD_ID",
+    "id": "FIELD_PRIORITY",
     "options": {
-      "P0 — Must Ship": "OPTION_ID"
+      "P0 - Must Ship": "OPTION_PRIORITY_P0",
+      "P1 - High": "OPTION_PRIORITY_P1"
     }
   },
   "Risk": {
-    "id": "FIELD_ID",
+    "id": "FIELD_RISK",
     "options": {
-      "Low": "OPTION_ID"
+      "Low": "OPTION_RISK_LOW",
+      "Medium": "OPTION_RISK_MEDIUM"
     }
   },
   "Type": {
-    "id": "FIELD_ID",
+    "id": "FIELD_TYPE",
     "options": {
-      "Feature": "OPTION_ID"
+      "Feature": "OPTION_TYPE_FEATURE",
+      "Chore": "OPTION_TYPE_CHORE"
     }
   },
   "Effort": {
-    "id": "FIELD_ID",
+    "id": "FIELD_EFFORT",
     "options": {
-      "M — 2–3 days": "OPTION_ID"
+      "XS - <= 2 hours": "OPTION_EFFORT_XS",
+      "S - <= 1 day": "OPTION_EFFORT_S",
+      "M - 2-3 days": "OPTION_EFFORT_M"
     }
   },
   "Status": {
-    "id": "FIELD_ID",
+    "id": "FIELD_STATUS",
     "options": {
-      "Backlog": "OPTION_ID"
+      "Backlog": "OPTION_STATUS_BACKLOG",
+      "Ready": "OPTION_STATUS_READY"
     }
   }
 }

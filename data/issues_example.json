@@ -1,0 +1,26 @@
+[
+  {
+    "title": "[P1][Docs] Add repository setup guide",
+    "description": "## Goal\nCreate a concise setup guide for a fresh clone.\n\n## Acceptance Criteria\n- [ ] README includes install, dry-run, and execute commands\n- [ ] Environment variables are documented in .env.example\n- [ ] Sample JSON files validate in dry-run mode",
+    "status": "Backlog",
+    "release": "MVP",
+    "phase": "P1 - Scaffolding & DX",
+    "area": "Docs",
+    "priority": "P0 - Must Ship",
+    "risk": "Low",
+    "type": "Chore",
+    "effort": "S - <= 1 day"
+  },
+  {
+    "title": "[P1][Infra] Add CI for lint and tests",
+    "description": "## Goal\nRun quality checks on pull requests.\n\n## Acceptance Criteria\n- [ ] pytest runs the unit test suite\n- [ ] ruff checks formatting-sensitive Python issues\n- [ ] CI uses the package's supported Python versions",
+    "status": "Ready",
+    "release": "MVP",
+    "phase": "P1 - Scaffolding & DX",
+    "area": "Infra / DevOps",
+    "priority": "P1 - High",
+    "risk": "Medium",
+    "type": "Feature",
+    "effort": "M - 2-3 days"
+  }
+]

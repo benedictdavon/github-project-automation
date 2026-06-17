@@ -5,16 +5,19 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "github-project-automation"
 version = "0.1.0"
-description = "Production-grade tool to create GitHub issues and manage GitHub Project (v2) fields."
+description = "CLI tool to create GitHub issues and update GitHub Project v2 fields from JSON."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
-authors = [{name="Your Name"}]
+authors = [{name="Benedict Davon Martono"}]
 dependencies = [
   "requests>=2.31.0",
   "python-dotenv>=1.0.1",
   "rich>=13.7.0",
 ]
+
+[project.scripts]
+gh-project-automation = "gh_project_automation.cli:main"
 
 [project.optional-dependencies]
 dev = [
@@ -28,5 +31,11 @@ package-dir = {"" = "src"}
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+
+[tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
 ignore = []
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
