@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
 
 from .github_rest import GitHubREST
 from .utils import console
@@ -12,6 +11,7 @@ class CreatedIssue:
     number: int
     node_id: str
     html_url: str
+    title: str = ""
 
 
 class IssueCreator:
@@ -32,4 +32,33 @@ class IssueCreator:
             number=int(data["number"]),
             node_id=str(data["node_id"]),
             html_url=str(data["html_url"]),
+            title=str(data["title"]),
+        )
+
+    def update(self, *, issue: CreatedIssue, title: str, body: str) -> CreatedIssue:
+        console.print(f"[cyan]Updating existing issue[/cyan] #{issue.number}: {title}")
+        data = self.rest.update_issue(
+            owner=self.owner,
+            repo=self.repo,
+            number=issue.number,
+            title=title,
+            body=body,
+        )
+        return CreatedIssue(
+            number=int(data["number"]),
+            node_id=str(data["node_id"]),
+            html_url=str(data["html_url"]),
+            title=str(data["title"]),
+        )
+
+    def find_existing(self, *, title: str) -> CreatedIssue | None:
+        data = self.rest.find_issue_by_title(owner=self.owner, repo=self.repo, title=title)
+        if data is None:
+            return None
+
+        return CreatedIssue(
+            number=int(data["number"]),
+            node_id=str(data["node_id"]),
+            html_url=str(data["html_url"]),
+            title=str(data["title"]),
         )

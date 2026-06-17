@@ -1,15 +1,16 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Iterable
 from dataclasses import dataclass
+from json import JSONDecodeError
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from rich.table import Table
 
 from .project_fields import CANONICAL_FIELDS, FieldMeta, get_canonical_field_name
 from .utils import ValidationError, console
-
 
 REQUIRED_ISSUE_KEYS = [
     "title",
@@ -34,7 +35,13 @@ class ValidatedIssue:
 
 def load_issues(path: str | Path) -> list[dict[str, Any]]:
     p = Path(path)
-    raw = json.loads(p.read_text(encoding="utf-8"))
+    try:
+        raw = json.loads(p.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ValidationError(f"Issues file not found: {p}") from exc
+    except JSONDecodeError as exc:
+        raise ValidationError(f"Issues file is not valid JSON: {p} ({exc.msg})") from exc
+
     if not isinstance(raw, list):
         raise ValidationError("issues JSON must be a list of issue objects")
     return raw
@@ -54,10 +61,12 @@ def validate_issues(
             raise ValidationError(f"Issue #{idx} missing required keys: {', '.join(missing)}")
 
         title = str(issue["title"]).strip()
-        desc = str(issue["description"])
+        desc = str(issue["description"]).strip()
 
         if not title:
             raise ValidationError(f"Issue #{idx} title cannot be empty")
+        if not desc:
+            raise ValidationError(f"Issue #{idx} description cannot be empty")
 
         # validate each project field value exists in fields.json
         issue_fields: dict[str, str] = {}
@@ -91,7 +100,10 @@ def print_dry_run_preview(issues: list[ValidatedIssue], *, limit: int | None = N
 
     slice_ = issues[:limit] if limit else issues
     for i, it in enumerate(slice_, start=1):
-        row = [str(i), it.title] + [it.fields[k] for k in ["release","phase","area","priority","risk","type","effort","status"]]
+        row = [str(i), it.title] + [
+            it.fields[k]
+            for k in ["release", "phase", "area", "priority", "risk", "type", "effort", "status"]
+        ]
         table.add_row(*row)
 
     console.print(table)

@@ -1,0 +1,26 @@
+[
+  {
+    "title": "[P1][Docs] Add repository setup guide",
+    "description": "First copy of the issue.",
+    "status": "Backlog",
+    "release": "MVP",
+    "phase": "P1 - Scaffolding & DX",
+    "area": "Docs",
+    "priority": "P0 - Must Ship",
+    "risk": "Low",
+    "type": "Chore",
+    "effort": "S - <= 1 day"
+  },
+  {
+    "title": " [p1][docs]   add repository setup guide ",
+    "description": "Second copy with different case and whitespace.",
+    "status": "Ready",
+    "release": "MVP",
+    "phase": "P1 - Scaffolding & DX",
+    "area": "Docs",
+    "priority": "P0 - Must Ship",
+    "risk": "Low",
+    "type": "Chore",
+    "effort": "S - <= 1 day"
+  }
+]

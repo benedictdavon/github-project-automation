@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import time
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable, TypeVar
+from typing import TypeVar
 
 from rich.console import Console
 
@@ -43,8 +44,11 @@ def retry(
     fn: Callable[[], T],
     *,
     retry_on: tuple[type[Exception], ...],
-    cfg: RetryConfig = RetryConfig(),
+    cfg: RetryConfig | None = None,
 ) -> T:
+    if cfg is None:
+        cfg = RetryConfig()
+
     last_exc: Exception | None = None
     for attempt in range(1, cfg.max_attempts + 1):
         try:

@@ -1,12 +1,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
 
 from .graphql_client import GraphQLClient
 from .project_fields import FieldMeta
 from .utils import ApiError, console
-
 
 ADD_ITEM_MUTATION = """
 mutation AddProjectV2Item($projectId:ID!, $contentId:ID!) {
@@ -16,8 +14,30 @@ mutation AddProjectV2Item($projectId:ID!, $contentId:ID!) {
 }
 """
 
+ISSUE_PROJECT_ITEMS_QUERY = """
+query IssueProjectItems($issueId: ID!) {
+  node(id: $issueId) {
+    ... on Issue {
+      projectItems(first: 100) {
+        nodes {
+          id
+          project {
+            id
+          }
+        }
+      }
+    }
+  }
+}
+"""
+
 UPDATE_SINGLE_SELECT_MUTATION = """
-mutation UpdateProjectV2ItemFieldValue($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
+mutation UpdateProjectV2ItemFieldValue(
+  $projectId: ID!
+  $itemId: ID!
+  $fieldId: ID!
+  $optionId: String!
+) {
   updateProjectV2ItemFieldValue(
     input: {
       projectId: $projectId
@@ -42,13 +62,41 @@ class ProjectItemManager:
         self.gql = gql
         self.project_id = project_id
 
+    def find_item_for_issue(self, *, issue_node_id: str) -> AddedProjectItem | None:
+        data = self.gql.query(ISSUE_PROJECT_ITEMS_QUERY, {"issueId": issue_node_id})
+        node = data.get("node") or {}
+        project_items = node.get("projectItems") or {}
+
+        for item in project_items.get("nodes") or []:
+            project = item.get("project") or {}
+            if project.get("id") == self.project_id:
+                return AddedProjectItem(item_id=str(item["id"]))
+
+        return None
+
+    def ensure_issue_in_project(self, *, issue_node_id: str, execute: bool) -> AddedProjectItem:
+        if not execute:
+            return self.add_issue_to_project(issue_node_id=issue_node_id, execute=False)
+
+        existing = self.find_item_for_issue(issue_node_id=issue_node_id)
+        if existing is not None:
+            console.print("[cyan]Reusing existing project item[/cyan]")
+            return existing
+
+        return self.add_issue_to_project(issue_node_id=issue_node_id, execute=True)
+
     def add_issue_to_project(self, *, issue_node_id: str, execute: bool) -> AddedProjectItem:
         if not execute:
-            console.print(f"[yellow]DRY-RUN[/yellow] would add issue node {issue_node_id} to project")
+            console.print(
+                f"[yellow]DRY-RUN[/yellow] would add issue node {issue_node_id} to project"
+            )
             return AddedProjectItem(item_id="DRY_RUN_ITEM_ID")
 
         console.print("[cyan]Adding issue to project[/cyan]")
-        data = self.gql.query(ADD_ITEM_MUTATION, {"projectId": self.project_id, "contentId": issue_node_id})
+        data = self.gql.query(
+            ADD_ITEM_MUTATION,
+            {"projectId": self.project_id, "contentId": issue_node_id},
+        )
         item_id = data["addProjectV2ItemById"]["item"]["id"]
         return AddedProjectItem(item_id=str(item_id))
 
@@ -61,7 +109,9 @@ class ProjectItemManager:
         execute: bool,
     ) -> None:
         if not execute:
-            console.print(f"[yellow]DRY-RUN[/yellow] would set field {field.id} to option {option_id}")
+            console.print(
+                f"[yellow]DRY-RUN[/yellow] would set field {field.id} to option {option_id}"
+            )
             return
 
         data = self.gql.query(

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
+from json import JSONDecodeError
 from pathlib import Path
-from typing import Any
 
 from .utils import ValidationError
 
@@ -16,7 +16,13 @@ class FieldMeta:
 
 def load_fields_json(path: str | Path) -> dict[str, FieldMeta]:
     p = Path(path)
-    raw = json.loads(p.read_text(encoding="utf-8"))
+    try:
+        raw = json.loads(p.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ValidationError(f"Fields metadata file not found: {p}") from exc
+    except JSONDecodeError as exc:
+        raise ValidationError(f"Fields metadata is not valid JSON: {p} ({exc.msg})") from exc
+
     out: dict[str, FieldMeta] = {}
 
     if not isinstance(raw, dict):
@@ -24,11 +30,16 @@ def load_fields_json(path: str | Path) -> dict[str, FieldMeta]:
 
     for field_name, meta in raw.items():
         if not isinstance(meta, dict) or "id" not in meta or "options" not in meta:
-            raise ValidationError(f"Invalid metadata for field '{field_name}'. Expected keys: id, options")
+            raise ValidationError(
+                f"Invalid metadata for field '{field_name}'. Expected keys: id, options"
+            )
         options = meta["options"]
         if not isinstance(options, dict):
             raise ValidationError(f"Invalid options for field '{field_name}': must be an object")
-        out[field_name] = FieldMeta(id=str(meta["id"]), options={str(k): str(v) for k, v in options.items()})
+        out[field_name] = FieldMeta(
+            id=str(meta["id"]),
+            options={str(k): str(v) for k, v in options.items()},
+        )
     return out
 
 
